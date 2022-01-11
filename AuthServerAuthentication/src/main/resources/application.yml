@@ -20,7 +20,7 @@ spring:
         registration:
           google:
             client-id: 741370838057-h3u3791lgpu9pkv57crsfqu7fdu60gh1.apps.googleusercontent.com
-            client-secret: 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
+            client-secret: ${GOOGLE_SECRET}
             scope: openid,profile,email
             client-name: Demo_Spring_Security
 
