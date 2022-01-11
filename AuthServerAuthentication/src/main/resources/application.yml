@@ -1,0 +1,61 @@
+server:
+  http:
+    port: 8080
+  port: 8083
+  servlet:
+    context-path: /myapp
+    session:
+      cookie:
+        path: /myapp
+  ssl:
+    key-store-password: tomcat
+    key-store: classpath:mykeystore.p12
+    key-store-type: PKCS12
+    key-alias: tomcat
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 741370838057-h3u3791lgpu9pkv57crsfqu7fdu60gh1.apps.googleusercontent.com
+            client-secret: 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
+            scope: openid,profile,email
+            client-name: Demo_Spring_Security
+
+          ashish:
+            client-id: demoClient
+            client-secret: secret
+            client-name: ashish
+            scope: user_info,read,write
+            redirect-uri: https://localhost:8083/myapp/login/oauth2/code/ashish
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+            provider: ashish-authserver-provider
+
+        provider:
+          ashish-authserver-provider:
+            token-uri: http://localhost:8081/auth/oauth/token
+            authorization-uri: http://localhost:8081/auth/oauth/authorize
+            user-info-uri: http://localhost:8081/auth/userinfo
+            user-name-attribute: name
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:file:~/spring-boot-h2-security-db;AUTO_SERVER=TRUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    initialization-mode: never
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+
+logging:
+  level:
+    org.springframework.security.oauth2: DEBUG
